@@ -69,7 +69,7 @@
 		"oat-sa/generis" : ">=14.0.0",
 		"oat-sa/extension-tao-delivery" : ">=15.0.0",
 		"oat-sa/extension-tao-lti" : ">=12.0.0",
-		"oat-sa/extension-tao-outcomeui" : ">=10.0.0",
+		"oat-sa/extension-tao-outcomeui" : ">=11.0.0",
 		"oat-sa/extension-tao-testqti-previewer" : ">=3.0.0"
 	}
 }
