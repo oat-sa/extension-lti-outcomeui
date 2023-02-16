@@ -149,7 +149,7 @@ class ItemResultPreviewer extends ToolModule
     {
         $variable = $this->getItemVariable($delivery, $resultIdentifier, $itemDefinition);
         if (isset($variable['uri'])) {
-            $responses = $this->getResultVariableStructureHandler()->format([$variable]);
+            $responses = ResponseVariableFormatter::formatStructuredVariablesToItemState([$variable]);
             return current($responses);
         }
 
