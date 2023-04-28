@@ -70,6 +70,6 @@
         "oat-sa/extension-tao-delivery": ">=15.0.0",
         "oat-sa/extension-tao-lti": "dev-feature/AUT-2995",
         "oat-sa/extension-tao-outcomeui": ">=11.0.0",
-        "oat-sa/extension-tao-testqti-previewer": ">=3.0.0"
+        "oat-sa/extension-tao-testqti-previewer": "dev-feature/AUT-2995"
     }
 }
