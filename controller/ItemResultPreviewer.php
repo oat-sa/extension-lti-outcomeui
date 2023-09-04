@@ -30,7 +30,7 @@ use oat\taoLti\models\classes\LtiException;
 use oat\taoLti\models\classes\LtiMessages\LtiErrorMessage;
 use oat\taoOutcomeUi\model\ResultsService;
 use oat\taoOutcomeUi\model\Wrapper\ResultServiceWrapper;
-use oat\taoQtiTest\models\DeliveryItemTypeRepository;
+use oat\taoQtiTest\models\DeliveryItemTypeService;
 use oat\taoQtiTestPreviewer\models\ItemPreviewer;
 use oat\taoQtiTestPreviewer\models\PreviewLanguageService;
 use oat\taoResultServer\models\classes\ResultServerService;
@@ -127,10 +127,10 @@ class ItemResultPreviewer extends ToolModule
      */
     protected function getItemResultPreviewerType($resultIdentifier)
     {
-        /** @var DeliveryItemTypeRepository $deliveryItemTypeRepository */
-        $deliveryItemTypeRepository = $this->getServiceLocator()->get(DeliveryItemTypeRepository::SERVICE_ID);
+        /** @var DeliveryItemTypeService $deliveryItemTypeService */
+        $deliveryItemTypeService = $this->getServiceLocator()->get(DeliveryItemTypeService::SERVICE_ID);
 
-        return $deliveryItemTypeRepository->getDeliveryItemType($resultIdentifier);
+        return $deliveryItemTypeService->getDeliveryItemType($resultIdentifier);
     }
 
     /**
