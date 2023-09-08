@@ -71,6 +71,6 @@
         "oat-sa/extension-tao-lti": ">=12.0.0",
         "oat-sa/extension-tao-outcomeui": ">=11.0.0",
         "oat-sa/extension-tao-testqti-previewer": ">=3.0.0",
-        "oat-sa/extension-tao-testqti" : ">=41.22.2"
+        "oat-sa/extension-tao-testqti" : ">=47.2.3"
     }
 }
