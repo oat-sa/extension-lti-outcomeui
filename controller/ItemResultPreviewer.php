@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,21 +20,21 @@
 
 namespace oat\ltiOutcomeUi\controller;
 
+use core_kernel_classes_Resource;
 use oat\generis\model\OntologyAwareTrait;
 use oat\ltiOutcomeUi\model\service\ResultVariableStructureHandler;
 use oat\oatbox\log\LoggerAwareTrait;
 use oat\taoDelivery\model\execution\ServiceProxy;
 use oat\taoLti\controller\ToolModule;
 use oat\taoLti\models\classes\LtiException;
+use oat\taoLti\models\classes\LtiMessages\LtiErrorMessage;
 use oat\taoOutcomeUi\model\ResultsService;
-use oat\taoOutcomeUi\model\ResultsViewerService;
+use oat\taoOutcomeUi\model\Wrapper\ResultServiceWrapper;
+use oat\taoQtiTest\models\DeliveryItemTypeService;
 use oat\taoQtiTestPreviewer\models\ItemPreviewer;
 use oat\taoQtiTestPreviewer\models\PreviewLanguageService;
-use oat\taoOutcomeUi\model\Wrapper\ResultServiceWrapper;
 use oat\taoResultServer\models\classes\ResultServerService;
-use core_kernel_classes_Resource;
 use tao_helpers_Uri;
-use oat\taoLti\models\classes\LtiMessages\LtiErrorMessage;
 
 /**
  * Class ItemResultPreviewer
@@ -46,8 +47,8 @@ class ItemResultPreviewer extends ToolModule
     use OntologyAwareTrait;
     use LoggerAwareTrait;
 
-    const PARAM_RESULT_ID = 'resultId';
-    const PARAM_ITEM_REF = 'itemRef';
+    public const PARAM_RESULT_ID = 'resultId';
+    public const PARAM_ITEM_REF = 'itemRef';
 
     /**
      * The result variables of an item
@@ -103,7 +104,9 @@ class ItemResultPreviewer extends ToolModule
             $this->defaultData();
             $data['type'] = $this->getItemResultPreviewerType($resultIdentifier);
             $data['content'] = $this->getItemContent($itemDefinition, $resultIdentifier, $delivery->getUri());
-            $data['state'] = current($this->getItemResultVariables($delivery, $resultIdentifier, $itemDefinition) ?? []);
+            $data['state'] = current(
+                $this->getItemResultVariables($delivery, $resultIdentifier, $itemDefinition) ?? []
+            );
             $data['itemDefinition'] = $itemDefinition;
             $data['resultIdentifier'] = $resultIdentifier;
             $data['deliveryIdentifier'] = $delivery->getUri();
@@ -124,8 +127,10 @@ class ItemResultPreviewer extends ToolModule
      */
     protected function getItemResultPreviewerType($resultIdentifier)
     {
-        return $this->getServiceLocator()->get(ResultsViewerService::SERVICE_ID)
-            ->getDeliveryItemType($resultIdentifier);
+        /** @var DeliveryItemTypeService $deliveryItemTypeService */
+        $deliveryItemTypeService = $this->getServiceLocator()->get(DeliveryItemTypeService::SERVICE_ID);
+
+        return $deliveryItemTypeService->getDeliveryItemType($resultIdentifier);
     }
 
     /**
@@ -230,7 +235,9 @@ class ItemResultPreviewer extends ToolModule
     {
         if (!isset($this->itemVariables[$itemDefinition])) {
             $variables = $this->getDeliveryResultsService($delivery)->getStructuredVariables(
-                $resultIdentifier, ResultsService::VARIABLES_FILTER_ALL, [\taoResultServer_models_classes_ResponseVariable::class]
+                $resultIdentifier,
+                ResultsService::VARIABLES_FILTER_ALL,
+                [\taoResultServer_models_classes_ResponseVariable::class]
             );
 
             $itemVariables = [];
